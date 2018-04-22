@@ -1,14 +1,105 @@
 /*
  * Create a list that holds all of your cards
- */
-
-
-/*
+ *
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
+ *
+ * set up the event listener for a card. If a card is clicked:
+ *  - display the card's symbol (put this functionality in another function that you call from this one)
+ *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *  - if the list already has another card, check to see if the two cards match
+ *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+ *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+ *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+ *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+/* ===== VARIABLES ===== */
+const cards = [
+	"fa fa-diamond",
+	"fa fa-paper-plane-o",
+	"fa fa-anchor",
+	"fa fa-bolt",
+	"fa fa-cube",
+	"fa fa-anchor",
+	"fa fa-leaf",
+	"fa fa-bicycle",
+	"fa fa-diamond",
+	"fa fa-bomb",
+	"fa fa-leaf",
+	"fa fa-bomb",
+	"fa fa-bolt",
+	"fa fa-bicycle",
+	"fa fa-paper-plane-o",
+	"fa fa-cube"
+];
+let deckOfCards = document.querySelector(".deck");
+
+setGame(cards, deckOfCards);
+
+/* ===== HELPER FUNCTIONS ===== */
+
+/**
+ * Create a card
+ * @param  STRING 	icon  Font Awesome or Glyphicon CSS classes
+ *                        as a string using a single space as
+ *                        separator if necessary (more than one CSS class)
+ * @param  INTEGER	pos   Any integer. If more than a card is created this
+ *                        value should be unique.
+ * @return OBJECT         DOM element
+ */
+function createCard(icon, pos) {
+	let card, cardIcon;
+
+	card     = createDOMObject("li", { class: "card", id: "card" + pos });
+	cardIcon = createDOMObject("i", { class: icon });
+
+	card.appendChild(cardIcon);
+
+	return card;
+}
+
+/**
+ * Create a new DOM Object
+ * @param  STRING tag   	HTML tag name
+ * @param  OBJECT options 	HTML element attributes
+ * @return OBJECT 			DOM element
+ */
+function createDOMObject(tag, options = {}) {
+	let obj  = document.createElement(tag);
+	let keys = null;
+
+	if(options.constructor === Object && Object.keys(options).length > 0) {
+		keys = Object.keys(options);
+
+		for(let key of keys) {
+			obj.setAttribute(key, options[key]);
+		}
+	}
+	return obj;
+}
+
+/**
+ * Set the game board.
+ * @param ARRAY  cards   List of CSS classes used to create card icons
+ * @param DOM    newDeck Container for cards
+ */
+function setGame(cards, newDeck) {
+	let icon;
+	newDeck.innerHTML = "";
+	cards = (cards.constructor === Array) ? shuffle(cards) : null;
+	try {
+		while(cards.length > 0) {
+			icon = cards.pop();
+			newDeck.appendChild(createCard(icon, cards.length));
+		}
+		return newDeck;
+	} catch(error) {
+		console.log("Unable to create valid deck of cards.");
+	}
+}
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -24,15 +115,3 @@ function shuffle(array) {
 
     return array;
 }
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
