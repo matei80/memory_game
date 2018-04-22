@@ -35,7 +35,7 @@ const cards = [
 	"fa fa-paper-plane-o",
 	"fa fa-cube"
 ];
-let currentCard;
+let currentCard, openCards = [];
 let deckOfCards = document.querySelector(".deck");
 
 setGame(cards, deckOfCards);
@@ -43,9 +43,23 @@ setGame(cards, deckOfCards);
 // add a listener to the whole deck of cards
 deckOfCards.addEventListener("click", function(event) {
 	currentCard = showSelectedCard(event);
+	openCards = addToArray(currentCard, openCards);
 });
 
 /* ===== HELPER FUNCTIONS ===== */
+
+/**
+ * Insert a value into an array
+ * @param   *   value   Any valid value
+ * @param  ARRAY array  Array to add to
+ * @return ARRAY        Resulted array
+ */
+function addToArray(value, array) {
+	if(value && array.constructor === Array) {
+		array.push(value);
+	}
+	return array;
+}
 
 /**
  * Create a card
