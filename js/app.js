@@ -69,8 +69,6 @@ deckOfCards.addEventListener("click", function(event) {
 			alert("Congratulations. You Won!");
 		}, 500);
 	}
-
-	console.log(matchedCards.length);
 });
 
 /* ===== HELPER FUNCTIONS ===== */
