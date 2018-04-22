@@ -63,6 +63,14 @@ deckOfCards.addEventListener("click", function(event) {
 		}
 		movesMade.innerHTML = ++counter;
 	}
+
+	if(isGameEnd(matchedCards)) {
+		setTimeout(function() {
+			alert("Congratulations. You Won!");
+		}, 500);
+	}
+
+	console.log(matchedCards.length);
 });
 
 /* ===== HELPER FUNCTIONS ===== */
@@ -142,6 +150,16 @@ function hideCards(array) {
 }
 
 /**
+ * Check if all cards were matched
+ * @param  ARRAY 	matched All matched cards list
+ * @return BOOLEAN         	TRUE if all cards were matched
+ *                          FALSE otherwise
+ */
+function isGameEnd(matched) {
+	return (matched.length === 16) ? true : false;
+}
+
+/**
  * Check if two cards have same icon
  * @param  ARRAY     array  List of valid HTML elements IDs
  * @return BOOLEANT         TRUE if same CSS classes
@@ -170,6 +188,7 @@ function setGame(cards, newDeck) {
 	let icon;
 	newDeck.innerHTML = "";
 	counter = 0;
+	matchedCards = [];
 	cards   = (cards.constructor === Array) ? shuffle(cards) : null;
 	try {
 		while(cards.length > 0) {
