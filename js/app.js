@@ -36,8 +36,12 @@ const cards = [
 	"fa fa-paper-plane-o",
 	"fa fa-cube"
 ];
-let currentCard, openCards = [], matchedCards = [];
-let deckOfCards = document.querySelector(".deck");
+let currentCard,
+    counter,
+    openCards    = [],
+    matchedCards = [],
+    deckOfCards  = document.querySelector(".deck"),
+    movesMade    = document.querySelector(".moves");
 
 setGame(cards, deckOfCards);
 
@@ -57,7 +61,7 @@ deckOfCards.addEventListener("click", function(event) {
 				openCards = [];
 			}, 300);
 		}
-
+		movesMade.innerHTML = ++counter;
 	}
 });
 
@@ -165,7 +169,8 @@ function isSameIcon(array) {
 function setGame(cards, newDeck) {
 	let icon;
 	newDeck.innerHTML = "";
-	cards = (cards.constructor === Array) ? shuffle(cards) : null;
+	counter = 0;
+	cards   = (cards.constructor === Array) ? shuffle(cards) : null;
 	try {
 		while(cards.length > 0) {
 			icon = cards.pop();
