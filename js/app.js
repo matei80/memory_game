@@ -36,7 +36,7 @@ const cards = [
 	"fa fa-paper-plane-o",
 	"fa fa-cube"
 ];
-let currentCard, openCards = [];
+let currentCard, openCards = [], matchedCards = [];
 let deckOfCards = document.querySelector(".deck");
 
 setGame(cards, deckOfCards);
@@ -48,7 +48,8 @@ deckOfCards.addEventListener("click", function(event) {
 
 	if(openCards.length === 2) {
 		if(isSameIcon(openCards)) {
-			// TODO: Add cards to a list of matched cards
+			addToArray(openCards[0], matchedCards);
+			addToArray(openCards[1], matchedCards);
 		}
 		openCards = [];
 	}
