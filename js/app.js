@@ -45,6 +45,13 @@ setGame(cards, deckOfCards);
 deckOfCards.addEventListener("click", function(event) {
 	currentCard = showSelectedCard(event);
 	openCards = addToArray(currentCard, openCards);
+
+	if(openCards.length === 2) {
+		if(isSameIcon(openCards)) {
+			// TODO: Add cards to a list of matched cards
+		}
+		openCards = [];
+	}
 });
 
 /* ===== HELPER FUNCTIONS ===== */
@@ -61,6 +68,7 @@ function addToArray(value, array) {
 	}
 	return array;
 }
+
 
 /**
  * Create a card
@@ -101,6 +109,26 @@ function createDOMObject(tag, options = {}) {
 	}
 	return obj;
 }
+
+/**
+ * Check if two cards have same icon
+ * @param  ARRAY     array  List of valid HTML elements IDs
+ * @return BOOLEANT         TRUE if same CSS classes
+ *                          FALSE otherwise
+ */
+function isSameIcon(array) {
+	let first, second;
+	try {
+		first  = document.getElementById(array[0]).childNodes[0].classList;
+		second = document.getElementById(array[1]).childNodes[0].classList;
+
+		return first.toString() === second.toString();
+	} catch(error) {
+		"Invalid array values. Only strings please.";
+	}
+	return false;
+}
+
 
 /**
  * Set the game board.
