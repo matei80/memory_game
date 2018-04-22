@@ -50,8 +50,14 @@ deckOfCards.addEventListener("click", function(event) {
 		if(isSameIcon(openCards)) {
 			addToArray(openCards[0], matchedCards);
 			addToArray(openCards[1], matchedCards);
+			openCards = [];
+		} else {
+			setTimeout(function() {
+				hideCards(openCards);
+				openCards = [];
+			}, 300);
 		}
-		openCards = [];
+
 	}
 });
 
@@ -109,6 +115,26 @@ function createDOMObject(tag, options = {}) {
 		}
 	}
 	return obj;
+}
+
+/**
+ * Hide cards if don't match
+ * @param  ARRAY   array List of valid HTML IDs for elements
+ *                       to remove CSS classes from
+ * @return VOID
+ */
+function hideCards(array) {
+	let first, second;
+	try {
+		first  = document.getElementById(array[0]);
+		second = document.getElementById(array[1]);
+
+		first.classList.remove("show", "open", "disabled");
+		second.classList.remove("show", "open", "disabled");
+
+	} catch(error) {
+		"Unable to perform action. Please try to refresh page.";
+	}
 }
 
 /**
