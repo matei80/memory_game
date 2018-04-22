@@ -107,3 +107,8 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+/* Source: https://stackoverflow.com/questions/15643505/how-can-i-disable-a-specific-li-element-inside-a-ul; */
+.disabled {
+    pointer-events:none; /* This makes it not clickable */
+}

@@ -35,9 +35,15 @@ const cards = [
 	"fa fa-paper-plane-o",
 	"fa fa-cube"
 ];
+let currentCard;
 let deckOfCards = document.querySelector(".deck");
 
 setGame(cards, deckOfCards);
+
+// add a listener to the whole deck of cards
+deckOfCards.addEventListener("click", function(event) {
+	currentCard = showSelectedCard(event);
+});
 
 /* ===== HELPER FUNCTIONS ===== */
 
@@ -99,6 +105,20 @@ function setGame(cards, newDeck) {
 	} catch(error) {
 		console.log("Unable to create valid deck of cards.");
 	}
+}
+
+/**
+ * Display the selected card
+ * @param  DOM Event  event   The "CLICK" event
+ * @return OBJECT             Card that was clicked
+ */
+function showSelectedCard(event) {
+	let card;
+	if(event.type === "click" && event.target.tagName === "LI") {
+		event.target.classList.add("show", "open", "disabled");
+		return event.target.getAttribute("id");
+	}
+	return;
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
