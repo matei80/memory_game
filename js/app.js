@@ -61,7 +61,7 @@ deckOfCards.addEventListener("click", function(event) {
 				openCards = [];
 			}, 300);
 		}
-		movesMade.innerHTML = ++counter;
+		showMovesCount(++counter);
 	}
 
 	if(isGameEnd(matchedCards)) {
@@ -211,6 +211,15 @@ function showSelectedCard(event) {
 		return event.target.getAttribute("id");
 	}
 	return;
+}
+
+/**
+ * Show number of moves made
+ * @param  INTEGER value Moves made
+ * @return VOID
+ */
+function showMovesCount(value) {
+	movesMade.innerHTML = value;
 }
 
 // Shuffle function from http://stackoverflow.com/a/2450976
