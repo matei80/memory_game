@@ -17,6 +17,10 @@
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
+// TODO: Add functionality for RELOAD button
+//     : Add visual effect on cards match
+//     : Add visual effect on cards unmatch
+
 /* ===== VARIABLES ===== */
 const cards = [
 	"fa fa-diamond",
@@ -142,7 +146,6 @@ function gameEnd(moves) {
 		let scoreStat = JSON.parse(localStorage.getItem("memoryGame"));
 
 		localStorage.removeItem("memoryGame");
-
 		localStorage.setItem("memoryGame", JSON.stringify(userData));
 
 		if(scoreStat) {
