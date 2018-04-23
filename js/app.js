@@ -187,6 +187,7 @@ function setGame(cards, newDeck) {
 	newDeck.innerHTML = "";
 	counter = 0;
 	matchedCards = [];
+	movesMade.innerHTML = "0";
 	cards   = (cards.constructor === Array) ? shuffle(cards) : null;
 	try {
 		while(cards.length > 0) {
