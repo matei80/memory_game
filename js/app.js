@@ -66,7 +66,7 @@ deckOfCards.addEventListener("click", function(event) {
 
 	if(isGameEnd(matchedCards)) {
 		setTimeout(function() {
-			alert("Congratulations. You Won!");
+			gameEnd(counter);
 		}, 500);
 	}
 });
@@ -125,6 +125,39 @@ function createDOMObject(tag, options = {}) {
 		}
 	}
 	return obj;
+}
+
+/**
+ * Display a message when the player wins the game
+ * that shows the prevision game score and the
+ * current game score.
+ * @param  INTEGER moves [description]
+ * @return VOID       	 [description]
+ */
+function gameEnd(moves) {
+	let name = prompt("Enter your name:");
+
+	if(typeof localStorage != 'undefined') {
+		let userData  = [name, moves, new Date()];
+		let scoreStat = JSON.parse(localStorage.getItem("memoryGame"));
+
+		localStorage.removeItem("memoryGame");
+
+		localStorage.setItem("memoryGame", JSON.stringify(userData));
+
+		if(scoreStat) {
+			alert("Game stats:\nPlayer: " + userData[0] +
+					"\nMoves made: " + userData[1] +
+					"\nGame date: " + userData[2] +
+					"\n\nPrevious game stats:\nPlayer " + scoreStat[0] +
+					"\nMoves made: " + scoreStat[1] +
+					"\nGame date: " + scoreStat[2]
+				);
+		}
+	} else {
+		alert("Thank you for playing with me " + name + ".\nYou've won after " + moves + " moves.");
+	}
+	alert("To play again, press Reload button. Have fun!");
 }
 
 /**
