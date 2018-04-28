@@ -29,7 +29,8 @@ let currentCard,
     matchedCards,
     deckOfCards  = document.querySelector(".deck"),
     movesMade    = document.querySelector(".moves"),
-    restartGame  = document.querySelector(".restart");
+    restartGame  = document.querySelector(".restart"),
+    starsRating  = document.querySelector(".stars");
 
 setGame();
 
@@ -131,7 +132,7 @@ function gameEnd(moves) {
 	let name = prompt("Enter your name:");
 
 	if(typeof localStorage != 'undefined') {
-		let userData  = [name, moves, new Date()];
+		let userData  = [name, setStarRating(moves), new Date()];
 		let scoreStat = JSON.parse(localStorage.getItem("memoryGame"));
 
 		localStorage.removeItem("memoryGame");
@@ -139,15 +140,15 @@ function gameEnd(moves) {
 
 		if(scoreStat) {
 			alert("Game stats:\nPlayer: " + userData[0] +
-					"\nMoves made: " + userData[1] +
+					"\nStar rating: " + userData[1] +
 					"\nGame date: " + userData[2] +
 					"\n\nPrevious game stats:\nPlayer " + scoreStat[0] +
-					"\nMoves made: " + scoreStat[1] +
+					"\nStar rating: " + scoreStat[1] +
 					"\nGame date: " + scoreStat[2]
 				);
 		}
 	} else {
-		alert("Thank you for playing with me " + name + ".\nYou've won after " + moves + " moves.");
+		alert("Thank you for playing with me " + name + ".\nYou've won after " + moves + " moves. Your rating is " + setStarRating(moves) + "star(s).");
 	}
 	alert("To play again, press Reload button. Have fun!");
 }
@@ -208,33 +209,35 @@ function isSameIcon(array) {
  * @param DOM    newDeck Container for cards
  */
 function setGame() {
-	let icon, cardIcons, deckOfCards  = document.querySelector(".deck");
-	const cards = [
-	"fa fa-diamond",
-	"fa fa-paper-plane-o",
-	"fa fa-anchor",
-	"fa fa-bolt",
-	"fa fa-cube",
-	"fa fa-anchor",
-	"fa fa-leaf",
-	"fa fa-bicycle",
-	"fa fa-diamond",
-	"fa fa-bomb",
-	"fa fa-leaf",
-	"fa fa-bomb",
-	"fa fa-bolt",
-	"fa fa-bicycle",
-	"fa fa-paper-plane-o",
-	"fa fa-cube"
-	];
+	let icon,
+		cardIcons,
+		deckOfCards  = document.querySelector(".deck");
+	const cards 	 = [
+							"fa fa-diamond",
+							"fa fa-paper-plane-o",
+							"fa fa-anchor",
+							"fa fa-bolt",
+							"fa fa-cube",
+							"fa fa-anchor",
+							"fa fa-leaf",
+							"fa fa-bicycle",
+							"fa fa-diamond",
+							"fa fa-bomb",
+							"fa fa-leaf",
+							"fa fa-bomb",
+							"fa fa-bolt",
+							"fa fa-bicycle",
+							"fa fa-paper-plane-o",
+							"fa fa-cube"
+						];
 
 	deckOfCards.innerHTML = "";
-	counter = 0;
-	openCards    = [];
-	matchedCards = [];
-	movesMade.innerHTML = "0";
-
-	cardIcons   = (cards.constructor === Array) ? shuffle(cards) : null;
+	starsRating.innerHTML = "";
+	counter 			  = 0;
+	openCards    		  = [];
+	matchedCards 		  = [];
+	movesMade.innerHTML   = "0";
+	cardIcons   		  = (cards.constructor === Array) ? shuffle(cards) : null;
 
 	try {
 		while(cardIcons.length > 0) {
@@ -246,6 +249,25 @@ function setGame() {
 		console.log("Unable to create valid deck of cards.");
 	}
 
+}
+
+/**
+ * Calculate number of stars. Max 3, min 0
+ *
+ * Stars rating:
+ * between 8 and 12 -- 3 stars
+ * between 13 and 16 -- 2 stars
+ * between 17 and 20 -- 1 star
+ * above 20          -- 0 stars
+ *
+ * @param INTEGER counter Rating value
+ */
+function setStarRating(counter) {
+	let stars;
+	counter = parseInt(counter);
+	stars   = 6 - Math.ceil(counter / 4);
+	stars = stars < 0 ? 0 : stars;
+	return stars;
 }
 
 /**
@@ -282,6 +304,5 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
