@@ -50,7 +50,7 @@ let currentCard,
 setGame(cards, deckOfCards);
 
 // add a listener to the whole deck of cards
-deckOfCards.addEventListener("click", function(event) {
+deckOfCards.addEventListener("click", function rollGame(event) {
 	currentCard = showSelectedCard(event);
 	openCards = addToArray(currentCard, openCards);
 
@@ -60,6 +60,7 @@ deckOfCards.addEventListener("click", function(event) {
 			addToArray(openCards[1], matchedCards);
 			openCards = [];
 		} else {
+			deckOfCards.removeEventListener("click", rollGame(event));
 			setTimeout(function() {
 				hideCards(openCards);
 				openCards = [];
