@@ -22,32 +22,20 @@
 //     : Add visual effect on cards unmatch
 
 /* ===== VARIABLES ===== */
-const cards = [
-	"fa fa-diamond",
-	"fa fa-paper-plane-o",
-	"fa fa-anchor",
-	"fa fa-bolt",
-	"fa fa-cube",
-	"fa fa-anchor",
-	"fa fa-leaf",
-	"fa fa-bicycle",
-	"fa fa-diamond",
-	"fa fa-bomb",
-	"fa fa-leaf",
-	"fa fa-bomb",
-	"fa fa-bolt",
-	"fa fa-bicycle",
-	"fa fa-paper-plane-o",
-	"fa fa-cube"
-];
+
 let currentCard,
     counter,
-    openCards    = [],
-    matchedCards = [],
+    openCards,
+    matchedCards,
     deckOfCards  = document.querySelector(".deck"),
-    movesMade    = document.querySelector(".moves");
+    movesMade    = document.querySelector(".moves"),
+    restartGame  = document.querySelector(".restart");
 
-setGame(cards, deckOfCards);
+setGame();
+
+restartGame.addEventListener("click", function(event) {
+    setGame();
+});
 
 // add a listener to the whole deck of cards
 deckOfCards.addEventListener("click", function rollGame(event) {
@@ -219,22 +207,45 @@ function isSameIcon(array) {
  * @param ARRAY  cards   List of CSS classes used to create card icons
  * @param DOM    newDeck Container for cards
  */
-function setGame(cards, newDeck) {
-	let icon;
-	newDeck.innerHTML = "";
+function setGame() {
+	let icon, cardIcons, deckOfCards  = document.querySelector(".deck");
+	const cards = [
+	"fa fa-diamond",
+	"fa fa-paper-plane-o",
+	"fa fa-anchor",
+	"fa fa-bolt",
+	"fa fa-cube",
+	"fa fa-anchor",
+	"fa fa-leaf",
+	"fa fa-bicycle",
+	"fa fa-diamond",
+	"fa fa-bomb",
+	"fa fa-leaf",
+	"fa fa-bomb",
+	"fa fa-bolt",
+	"fa fa-bicycle",
+	"fa fa-paper-plane-o",
+	"fa fa-cube"
+	];
+
+	deckOfCards.innerHTML = "";
 	counter = 0;
+	openCards    = [];
 	matchedCards = [];
 	movesMade.innerHTML = "0";
-	cards   = (cards.constructor === Array) ? shuffle(cards) : null;
+
+	cardIcons   = (cards.constructor === Array) ? shuffle(cards) : null;
+
 	try {
-		while(cards.length > 0) {
-			icon = cards.pop();
-			newDeck.appendChild(createCard(icon, cards.length));
+		while(cardIcons.length > 0) {
+			icon = cardIcons.pop();
+			deckOfCards.appendChild(createCard(icon, cardIcons.length));
 		}
-		return newDeck;
+		return deckOfCards;
 	} catch(error) {
 		console.log("Unable to create valid deck of cards.");
 	}
+
 }
 
 /**
